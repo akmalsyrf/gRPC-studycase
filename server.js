@@ -13,10 +13,10 @@ var packageDefinition = protoLoader.loadSync(PROTO_PATH, options);
 const newsProto = grpc.loadPackageDefinition(packageDefinition);
 
 const server = new grpc.Server();
-let news = [
+let news = {news: [
   { id: "1", title: "Note 1", body: "Content 1", postImage: "Post image 1" },
   { id: "2", title: "Note 2", body: "Content 2", postImage: "Post image 2" },
-];
+]};
 
 server.addService(newsProto.NewsService.service, {
   getAllNews: (_, callback) => {
@@ -25,7 +25,7 @@ server.addService(newsProto.NewsService.service, {
 });
 
 server.bindAsync(
-  "localhost:50051",
+  "127.0.0.1:50051",
   grpc.ServerCredentials.createInsecure(),
   (error, port) => {
     console.log("Server run at port:", port);

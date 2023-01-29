@@ -16,7 +16,7 @@ app.get("/news", (req,res)=> {
             error
         })
         res.send({
-            status:`success get news by id ${id}`, 
+            status:`success get all news`, 
             data: news
         })
     });

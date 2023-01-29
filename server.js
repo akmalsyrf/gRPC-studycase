@@ -2,6 +2,7 @@ const grpc = require("@grpc/grpc-js");
 const PROTO_PATH = "./news.proto";
 var protoLoader = require("@grpc/proto-loader");
 const newsData = require("./mock-data")
+const interceptor = require('./interceptor')
 
 const options = {
   keepCase: true,
@@ -13,7 +14,9 @@ const options = {
 const packageDefinition = protoLoader.loadSync(PROTO_PATH, options);
 const newsProto = grpc.loadPackageDefinition(packageDefinition);
 
-const server = new grpc.Server();
+const server = new grpc.Server({
+  interceptor :[interceptor]
+});
 
 server.addService(newsProto.NewsService.service, {
   getAllNews: (_, callback) => {
